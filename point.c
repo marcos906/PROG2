@@ -89,6 +89,8 @@ Bool point_equal (const void *p1, const void *p2){
 
 int point_print (FILE *pf, const void *p){
     Point *_p=(Point*)p;
-    pf=fopen()
-
+    if(pf == NULL || p==NULL)
+        return -1;
+    fprintf(pf, "[(%d, %d): %c]", _p->x, _p->y, _p->symbol);
+    return 3;
 }
