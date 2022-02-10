@@ -1,3 +1,14 @@
+
+/*
+    @Titulo: point.c
+    @Autores: Hector Labrador Gomez y Samuel Heras De Paz
+    @Descripcion: Define cada una de las funciones nombradas en point.h
+    @Fecha: 8/02/2022
+    @Asignatura: Practicas Programacion II
+    @Grupo:2132
+*/
+
+
 #include "point.h"
 struct _Point {
     int x, y;

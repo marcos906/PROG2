@@ -1,3 +1,13 @@
+
+/*
+    @Titulo: p1_e1.c
+    @Autores: Hector Labrador Gomez y Samuel Heras De Paz
+    @Descripcion: Maneja las funciones definidas en point.c
+    @Fecha: 10/02/2022
+    @Asignatura: Practicas Programacion II
+    @Grupo:2132
+*/
+
 #include "point.h"
 Point *p[4];
 p[0] = point_new (0, 0, BARRIER);
