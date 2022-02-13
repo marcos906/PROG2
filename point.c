@@ -19,7 +19,7 @@ Point *point_new (int x, int y, char symbol){
     Point *a;
     a=(Point*)malloc(sizeof(Point));
     if(a==NULL){
-        return E;
+        return ERRORCHAR;
     }
     a->x=x;
     a->y=y;
