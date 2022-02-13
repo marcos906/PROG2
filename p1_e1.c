@@ -41,12 +41,12 @@ int main(){
         }
     p[3]=p[1];
     fprintf(pf, "Assign p[3] = p[0]");
-        if(point_setSymbol (p[3], OUTPUT)== OK){
-            if(point_print (pf, p[0])==3 || point_print (pf, p[1])==3 || point_print (pf, p[2])==3 || point_print (pf, p[3])==3)){
+        if(point_setSymbol (p[3], OUTPUT)== OK)
+            if(point_print (pf, p[0])==3 || point_print (pf, p[1])==3 || point_print (pf, p[2])==3 || point_print (pf, p[3])==3){
                 printf("El programa se ha ejecutado correctamente");
                 return 0;
             }
-        }
+        
     point_free (p[0]);
     point_free (p[1]);
     point_free (p[2]);
