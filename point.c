@@ -10,6 +10,7 @@
 
 
 #include "point.h"
+#include <limits.h> 
 struct _Point {
     int x, y;
     char symbol;
