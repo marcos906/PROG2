@@ -18,9 +18,9 @@ struct _Point {
 };
 Point *point_new (int x, int y, char symbol){
     Point *a;
-    a=(Point*)malloc(sizeof(Point));
+    a = (Point*)malloc(sizeof(Point));
     if(a==NULL){
-        return ERRORCHAR;
+        return NULL;
     }
     a->x=x;
     a->y=y;
@@ -68,7 +68,7 @@ Status point_setCoordinateY (Point *p, int y){
         return OK;
     }
 }
-Status  point_setSymbol (Point *p, char c){
+Status point_setSymbol (Point *p, char c){
     if(c==INPUT || c==OUTPUT || c==BARRIER || c== SPACE){
         p->symbol=c;
         return OK;
