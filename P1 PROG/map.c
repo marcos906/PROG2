@@ -12,12 +12,6 @@ struct _Map {
     Point *input, *output; // points input/output
 };
 
-struct _Point {
-    int x, y;
-    char symbol;
-    Bool visited; // for DFS
-};
-
 Map * map_new (unsigned int nrows,  unsigned int ncols){
     Map *mapNew;
     int i,j;
@@ -49,11 +43,12 @@ void map_free (Map * m){
 }
 
 Point *map_insertPoint (Map *mp, Point *p){
-    
     if (mp == NULL || p == NULL)
         return NULL;  //Control errores
-    mp->input->x = p->x; //Pones el punto (Coordenada x) en el mapa
-    mp->input->y = p->y; //Pones el punto (Coordenada y) en el mapa
+
+    int x = point_getCoordinateX(p);
+    int y = point_getCoordinateY(p);
+    mp->array[y][x] = p;
 
     return p; //Returneas el punto dado
 }
@@ -71,13 +66,15 @@ int map_getNrows (const Map *mp){
 }
 
 Point * map_getInput(const Map *mp){
-    Point *point;
+    Point *getImput;
     if (mp == NULL)
         return NULL;  //Control errores
-    point->x = mp->input->x; //coordenada x del input asociada al punto
-    point->y = mp->input->y; //coordenada y del input asociada al punto
 
-    return point; //Returneas el punto con las coordenadas del imput
+    int x = point_getCoordinateX(mp->input);//coordenada x del input asociada al punto
+    int y = point_getCoordinateY(mp->input); //coordenada y del input asociada al punto
+    mp->array[y][x] = getImput;
+
+    return getImput;  //Returneas el punto con las coordenadas del imput
 }
 
 Point * map_getOutput (const Map *mp){
@@ -128,5 +125,5 @@ Point *map_getNeighboor(const Map *mp, const Point *p, Position pos){
 }
 
 Map * map_readFromFile (FILE *pf){
-    
+
 }
