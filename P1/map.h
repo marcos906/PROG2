@@ -113,7 +113,7 @@ Point *map_getNeighboor(const Map *mp, const Point *p, Position pos);
 
 // setters
 Status map_setInput(Map *mp, Point *p);
-Status map_setOutput (Map *mp,Point *p);
+Status map_setOutput (Map *mp, Point *p);
 
 /* START [map_readFromFile] */
 /**
