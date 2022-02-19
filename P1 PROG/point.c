@@ -55,13 +55,18 @@ char point_getSymbol (const Point *p){
 Status point_setCoordinateX (Point *p, int x){
     if(x<0)
         return ERROR;
+    else if(p == NULL)
+        return ERROR;
     else{
         p->x=x;
         return OK;
     }
 }
 Status point_setCoordinateY (Point *p, int y){
-     if(y<0)
+    
+    if(y<0)
+        return ERROR;
+    else if(p == NULL)
         return ERROR;
     else{
         p->y=y;
@@ -73,17 +78,14 @@ Status point_setSymbol (Point *p, char c){
         p->symbol=c;
         return OK;
     }
+    else if(p == NULL)
+        return ERROR;
     else
         return ERROR;
 }
 Point *point_hardcpy (const Point *src){
     Point *trg;
-    trg=(Point*)malloc(sizeof(Point));
-    if(trg==NULL || src==NULL)
-        return NULL;
-    trg->x=src->x;
-    trg->y=src->y;
-    trg->symbol=src->symbol;
+    trg = point_new (src->x, src->y, src->symbol);
     return trg;
 
 }
@@ -103,6 +105,5 @@ int point_print (FILE *pf, const void *p){
     Point *_p=(Point*)p;
     if(pf == NULL || p==NULL)
         return -1;
-    fprintf(pf, "[(%d, %d): %c]", _p->x, _p->y, _p->symbol);
-    return 3;
+    return fprintf(pf, "[(%d, %d): %c]", _p->x, _p->y, _p->symbol);
 }

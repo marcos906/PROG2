@@ -13,6 +13,8 @@
 int main(){
     int i;
     Point *p[MAX];
+    if(point_new (0, 0, BARRIER) == NULL || point_new (0, 1, BARRIER) == NULL)
+        return 1;
     p[0] = point_new (0, 0, BARRIER);
     p[1] = point_new (0, 1, BARRIER);
     FILE *pf;
@@ -27,6 +29,8 @@ int main(){
             fprintf(pf, "Equal points p[0] and p[1]? No\n");
         else
             fprintf(pf, "Equal points p[0] and p[1]? Yes\n");
+    if(point_hardcpy(p[0]) == NULL)
+        return 1;
     p[2] = point_hardcpy(p[0]);
     fprintf(pf, "Creating p[2]: ");
         if(point_print (pf, p[2])==3)
@@ -59,6 +63,7 @@ int main(){
     for(i=0;i<MAX;i++){
         point_free (p[i]);
     }
+    fclose(pf);
     
 
 }
