@@ -49,7 +49,7 @@ int main(){
             if(point_print (stdout, p[3])!=-1)
                 fprintf(stdout, "\n");
             if(point_print (stdout, p[0])!=-1 && point_print (stdout, p[1])!=-1 && point_print (stdout, p[2])!=-1 && point_print (stdout, p[3])!=-1){
-                printf("El programa se ha ejecutado correctamente\n");
+                printf("\nEl programa se ha ejecutado correctamente\n");
                 return 0;
             }
         }

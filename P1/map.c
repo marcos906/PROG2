@@ -67,29 +67,39 @@ int map_getNrows (const Map *mp){
 
 Point * map_getInput(const Map *mp){
     Point *getImput;
-    if (mp == NULL)
+    getImput = (Point*)malloc(sizeof(Point)); //Alocamos memoria para el punto
+    if (mp == NULL || getImput == NULL)
         return NULL;  //Control errores
 
-    int x = point_getCoordinateX(mp->input);//coordenada x del input asociada al punto
-    int y = point_getCoordinateY(mp->input); //coordenada y del input asociada al punto
-    mp->array[y][x] = getImput;
-
+    int x = point_getCoordinateX(mp->input);//coordenada x del input 
+    int y = point_getCoordinateY(mp->input); //coordenada y del input 
+    char symbol = point_getSymbol (mp->input); //coge el simbolo del imput
+    getImput = point_new (x, y, symbol);
     return getImput;  //Returneas el punto con las coordenadas del imput
 }
 
 Point * map_getOutput (const Map *mp){
-    Point *punto;
-    if (mp == NULL)
+    Point *getOutput;
+    getOutput = (Point*)malloc(sizeof(Point)); //Alocamos memoria para el punto
+    if (mp == NULL || getOutput == NULL)
         return NULL;  //Control errores
-    punto->x = mp->output->x; //coordenada x del output asociada al punto
-    punto->y = mp->output->y; //coordenada y del output asociada al punto
 
-    return punto; //Returneas el punto con las coordenadas del output
+    int x = point_getCoordinateX(mp->output);//coordenada x del output 
+    int y = point_getCoordinateY(mp->output); //coordenada y del output 
+    char symbol = point_getSymbol (mp->output); //coge el simbolo del output
+    getOutput = point_new (x, y, symbol);
+    return getOutput;  //Returneas el punto con las coordenadas del output
 }
 Point *map_getPoint (const Map *mp, const Point *p){
-    if (mp == NULL || p == NULL)
+    Point *mapPoint;
+    if (mp == NULL || p == NULL || mapPoint == NULL)
         return NULL;  //Control errores
+    int x = point_getCoordinateX(mp->array[0]);
+    int y = point_getCoordinateY(p);
+    mp->array[y][x] = mapPoint;
 
+    return p; //Returneas el punto dado
+}
     p->x = mp->input->x; //Coges el punto (Coordenada x) en el mapa
     p->y = mp->input->y; //Coges el punto (Coordenada y) en el mapa
 
@@ -97,33 +107,58 @@ Point *map_getPoint (const Map *mp, const Point *p){
 }
 
 Point *map_getNeighboor(const Map *mp, const Point *p, Position pos){
-    Point *pointNeighboor;
-
-    if (mp == NULL || p == NULL)
+    Point *neighboor;
+    neighboor = (Point*)malloc(sizeof(Point));
+    if (mp == NULL || p == NULL || neighboor == NULL)
         return NULL;  //Control errores
-
+    int x = point_getCoordinateX(p);
+    int y = point_getCoordinateY(p);
+    char symbol = point_getSymbol(p);
     //Ascociamos las coordenadas dependiendo
     if(pos == 0){
-        pointNeighboor->x = p->x + 1;
-        pointNeighboor->y = p->y;
+        x = x + 1;
+        neighboor = point_new (x, y, symbol);
     }
     else if(pos == 1){
-        pointNeighboor->x = p->x;
-        pointNeighboor->y = p->y - 1;
+        y = y + 1;
+        neighboor = point_new (x, y, symbol);
     }
     else if(pos == 2){
-        pointNeighboor->x = p->x - 1;
-        pointNeighboor->y = p->y;
+        x = x - 1;
+        neighboor = point_new (x, y, symbol);
     }
-    else{
-        pointNeighboor->x = p->x;
-        pointNeighboor->y = p->y + 1;
+    else if(poss == 3){
+        y = y - 1;
+        neighboor = point_new (x, y, symbol);
     }
+    else
+        neighboor = point_new (x, y, symbol);
 
-    return pointNeighboor; //Returneamos el punto vecino
+    return neighboor; //Returneamos el punto vecino
 
 }
-
+Status map_setInput(Map *mp, Point *p){
+    if (mp == NULL || p == NULL)
+        return ERROR; // Control de errores
+    int x = point_getCoordinateX(p);
+    int y = point_getCoordinateY(p);
+    char symbol = point_getSymbol(p);
+    point_setCoordinateX(mp->imput)= x;
+    point_setCoordinateY(mp->imput) = y;
+    point_setSymbol(mp->imput) = symbol; 
+    return OK;
+}
+Status map_setOutput (Map *mp, Point *p){
+    if (mp == NULL || p == NULL)
+        return ERROR; // Control de errores
+    int x = point_getCoordinateX(p);
+    int y = point_getCoordinateY(p);
+    char symbol = point_getSymbol(p);
+    point_setCoordinateX(mp->output)= x;
+    point_setCoordinateY(mp->output) = y;
+    point_setSymbol(mp->output) = symbol; 
+    return OK;
+}
 Map * map_readFromFile (FILE *pf){
 
 }
