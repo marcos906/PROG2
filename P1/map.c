@@ -131,10 +131,10 @@ Point *map_getNeighboor(const Map *mp, const Point *p, Position pos){
         y = y - 1;
         neighboor = point_new (x, y, symbol);
     }
-    else
+    else{
         neighboor = point_new (x, y, symbol);
-
-    return neighboor; //Returneamos el punto vecino
+        return neighboor; //Returneamos el punto vecino
+    }
 
 }
 Status map_setInput(Map *mp, Point *p){
@@ -160,5 +160,14 @@ Status map_setOutput (Map *mp, Point *p){
     return OK;
 }
 Map * map_readFromFile (FILE *pf){
-
+    Map *mp;
+    int i;
+    mp = (Map*)malloc(sizeof(Map));
+    fscanf(pf, "%d %d", mp->nrows, mp->ncols);
+    for(i=0;i<mp->ncols;i++){
+        for(j=0;j<mp->nrows;j++){
+            fscanf(pf,%c %c %c %c, mp->)
+            point_setSymbol(Point *p, char c)
+        }    
+    }
 }
