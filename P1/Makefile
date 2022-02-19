@@ -1,5 +1,5 @@
 CC = @gcc -c -Wall -pedantic
-LCC = @gcc -Wall -o -pedantic
+LCC = @gcc -Wall -pedantic -o
 
 all: P1 clean
 P1: p1_e1.o point.o
