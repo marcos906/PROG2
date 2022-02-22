@@ -39,7 +39,6 @@ int main(){
                 return 1;
             neighboor = map_getNeighboor(nuevo, output, i);
             aux = point_print(stdout, neighboor);
-
         }
     }
     map_free (nuevo);

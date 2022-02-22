@@ -18,16 +18,14 @@ Map * map_new (unsigned int nrows,  unsigned int ncols){
     mapNew = (Map*)malloc(sizeof(Map)); //Alocamos memoria para el mapa
     if(mapNew == NULL)
         return NULL; //Control de errores
-
     mapNew->ncols = ncols; //Metemos la informacion que nos mandan a la nueva estructura map
     mapNew->nrows = nrows;
-    
-    mapNew->input = 0;
-    mapNew->output = 0; //Inicializamos a 0
+    mapNew->input = NULL;
+    mapNew->output = NULL; 
     
     for(i=0; i < MAX_NROWS; i++){
         for(j=0; j < MAX_NCOLS; j++)
-            mapNew->array[i][j]= 0; //A 0 todos los puntos del mapa
+            mapNew->array[i][j]= NULL;
     }
 
     return mapNew;
@@ -37,15 +35,18 @@ Map * map_new (unsigned int nrows,  unsigned int ncols){
 void map_free (Map * m){
     int i, j;
     for(i=0; i < MAX_NROWS; i++){
-        for(j=0; j < MAX_NCOLS; j++)
-            free(m->array[i][j]); // Liberas todos los puntos del mapa
+        for(j=0; j < MAX_NCOLS; j++){
+            point_free(m->array[i][j]); // Liberas todos los puntos del mapa
+        }
     }
+    free(m); //malloc mapa
 }
 
 Point *map_insertPoint (Map *mp, Point *p){
     if (mp == NULL || p == NULL)
-        return NULL;  //Control errores
-
+        return NULL; 
+    if(mp->ncols > 64 || mp->nrows >64 || mp->ncols < 0 || mp->nrows <0)//control errores de >64 y <0 
+        return NULL;
     int x = point_getCoordinateX(p);
     int y = point_getCoordinateY(p);
     mp->array[y][x] = p;
@@ -66,32 +67,17 @@ int map_getNrows (const Map *mp){
 }
 
 Point * map_getInput(const Map *mp){
-    Point *getImput;
-    if (mp == NULL)
-        return NULL;  //Control errores
-
-    int x = point_getCoordinateX(mp->input);//coordenada x del input 
-    int y = point_getCoordinateY(mp->input); //coordenada y del input 
-    char symbol = point_getSymbol (mp->input); //coge el simbolo del imput
-    getImput = point_new (x, y, symbol);
-    return getImput;  //Returneas el punto con las coordenadas del imput
+    return mp->input;
 }
-
 Point * map_getOutput (const Map *mp){
-    Point *getOutput;
-    if (mp == NULL)
-        return NULL;  //Control errores
-
-    int x = point_getCoordinateX(mp->output);//coordenada x del output 
-    int y = point_getCoordinateY(mp->output); //coordenada y del output 
-    char symbol = point_getSymbol (mp->output); //coge el simbolo del output
-    getOutput = point_new (x, y, symbol);
-    return getOutput;  //Returneas el punto con las coordenadas del output
+    return mp->output;
 }
 Point *map_getPoint (const Map *mp, const Point *p){
     Point *mapPoint;
     if (mp == NULL || p == NULL)
         return NULL;  //Control errores
+    if(mp->ncols > 64 || mp->nrows >64 || mp->ncols < 0 || mp->nrows <0)//control errores de >64 y <0 
+        return NULL;
     int x = point_getCoordinateX(p);
     int y = point_getCoordinateY(p);
     mapPoint = mp->array[y][x];
@@ -100,52 +86,51 @@ Point *map_getPoint (const Map *mp, const Point *p){
 }
 
 Point *map_getNeighboor(const Map *mp, const Point *p, Position pos){
-    Point *neighboor;
     if (mp == NULL || p == NULL)
         return NULL;  //Control errores
+    Point *neighboor;
     int x = point_getCoordinateX(p);
     int y = point_getCoordinateY(p);
-    char symbol = point_getSymbol(p);
-    //Ascociamos las coordenadas dependiendo
-    if(pos == 0){
+    switch (pos)
+    {
+    case 0:
         x = x + 1;
-        neighboor = point_new (x, y, symbol);
-    }
-    else if(pos == 1){
+        break;
+
+    case 1:
         y = y - 1;
-        neighboor = point_new (x, y, symbol);
-    }
-    else if(pos == 2){
+        break;
+
+    case 2:
         x = x - 1;
-        neighboor = point_new (x, y, symbol);
-    }
-    else if(pos == 3){
+        break;
+
+    case 3:
         y = y + 1;
-        neighboor = point_new (x, y, symbol);
+        break;
+
+    case 4:
+        break;
+        
+    default:
+        break;
     }
-    else{
-        neighboor = point_new (x, y, symbol);
-    }
+    neighboor = map_getPoint(mp, mp->array[y][x]);
     return neighboor; //Returneamos el punto vecino
 }
 Status map_setInput(Map *mp, Point *p){
     if (mp == NULL || p == NULL)
         return ERROR; // Control de errores
-    int x = point_getCoordinateX(p);
-    int y = point_getCoordinateY(p);
-    if (point_setCoordinateX(mp->input, x)==OK || point_setCoordinateY(mp->input, y)==OK || point_setSymbol(mp->input, INPUT)==OK)
-        return OK;
-    return ERROR;
+    mp->input = p;
+    return OK;
 }
 Status map_setOutput (Map *mp, Point *p){
-   if (mp == NULL || p == NULL)
+    if (mp == NULL || p == NULL)
         return ERROR; // Control de errores
-    int x = point_getCoordinateX(p);
-    int y = point_getCoordinateY(p);
-    if (point_setCoordinateX(mp->output, x)==OK || point_setCoordinateY(mp->output, y)==OK || point_setSymbol(mp->output, OUTPUT)==OK)
-        return OK;
-    return ERROR;
+    mp->output = p;
+    return OK;
 }
+
 Map * map_readFromFile (FILE *pf){
     Map *mp;
     Point *p;
@@ -157,49 +142,45 @@ Map * map_readFromFile (FILE *pf){
         for(j=0;j<mp->ncols;j++){
             fscanf(pf, "%c", &symbol);
             p = point_new (i, j, symbol);
-            mp->array[j][i] = p;
+            if(symbol == INPUT)
+                map_setInput(mp, p);
+            else
+                mp->array[j][i] = p;
+            if(symbol == OUTPUT)
+                map_setOutput(mp, p);
+            else
+                mp->array[j][i] = p;
         }    
     }
     return mp;
 }
 
 Bool map_equal (const void *_mp1, const void *_mp2){
-    Map *mp1=(Map*)_mp1;
-    Map *mp2=(Map*)_mp2;
-    int xi1, yi1, xi2, yi2, xo1, yo1, xo2, yo2;
     if(_mp2 == NULL || _mp1 == NULL)
         return FALSE;
+    Map *mp1=(Map*)_mp1;
+    Map *mp2=(Map*)_mp2;
+    int i, j;
     if(mp1->nrows != mp2-> nrows || mp1->ncols !=mp2->nrows)
         return FALSE;
-    xi1 = point_getCoordinateX(mp1->input);
-    yi1 = point_getCoordinateY(mp1->input);
-    xi2 = point_getCoordinateX(mp2->input);
-    yi2 = point_getCoordinateY(mp2->input);
-    xo1 = point_getCoordinateX(mp1->output);
-    yo1 = point_getCoordinateY(mp1->output);
-    xo2 = point_getCoordinateX(mp2->output);
-    yo2 = point_getCoordinateY(mp2->output);
-    if( xi1 != xi2 || yi1 != yi2 || xo1 != xo2 || yo1 != yo2)
-        return FALSE;
+    for(i=0;i<mp1->nrows;i++){
+        for(j=0;j<mp1->ncols;j++){
+            if(point_equal(mp1->array[i][j], mp2->array[i][j])== FALSE)
+                return FALSE;
+        }   
+    }
     return TRUE;      
     }
 
 int map_print (FILE*pf, Map *mp){
+    //POINT PRINT
     int i, j, x;
     if(pf == NULL || mp == NULL)
         return -1;
-    Point *input, *output;
-    input = map_getInput(mp);
-    output = map_getOutput(mp);
     fprintf(pf, "%d %d\n", mp->ncols, mp->nrows);
     for(i=0;i<mp->nrows;i++){
         for(j=0;j<mp->ncols;j++){
-            if(i == point_getCoordinateX(input) && j == point_getCoordinateY(input))
-                x = fprintf(pf, "[(%d, %d): %c] ", i, j, INPUT);
-            else if (i == point_getCoordinateX(output) && j == point_getCoordinateY(output))
-                x = fprintf(pf, "[(%d, %d): %c] ", i, j, OUTPUT);
-            else
-                x = fprintf(pf, "[(%d, %d): %c] ", i, j, BARRIER);
+            point_print(pf, mp->array[i][j]);
         }   
     }
     return x;

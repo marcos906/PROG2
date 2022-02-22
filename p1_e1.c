@@ -23,9 +23,12 @@ int main(){
             fprintf(stdout, "Equal points p[0] and p[1]? No\n");
         else
             fprintf(stdout, "Equal points p[0] and p[1]? Yes\n");
-    if(point_hardcpy(p[0]) == NULL)
-        return 1;
     p[2] = point_hardcpy(p[0]);
+    if(p[2] == NULL){
+        point_free(p[0]);
+        point_free(p[1]);
+        return 1;
+    }
     fprintf(stdout, "Creating p[2]: ");
         if(point_print (stdout, p[2])!=-1)
             fprintf(stdout, "\n");

@@ -74,17 +74,21 @@ Status point_setCoordinateY (Point *p, int y){
     }
 }
 Status point_setSymbol (Point *p, char c){
-    if(c==INPUT || c==OUTPUT || c==BARRIER || c== SPACE){
+    if(p == NULL)
+        return ERROR;
+    else if(c==INPUT || c==OUTPUT || c==BARRIER || c== SPACE){
         p->symbol=c;
         return OK;
     }
-    else if(p == NULL)
-        return ERROR;
     else
         return ERROR;
 }
 Point *point_hardcpy (const Point *src){
+    if(src == NULL)
+        return NULL;
     Point *trg;
+    if(trg == NULL)
+        return NULL;
     trg = point_new (src->x, src->y, src->symbol);
     return trg;
 
@@ -102,8 +106,8 @@ Bool point_equal (const void *p1, const void *p2){
     }
 
 int point_print (FILE *pf, const void *p){
-    Point *_p=(Point*)p;
-    if(p==NULL)
+    if(p==NULL || pf == NULL)
         return -1;
+    Point *_p=(Point*)p;
     return fprintf(pf, "[(%d, %d): %c]", _p->x, _p->y, _p->symbol);
 }
