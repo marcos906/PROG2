@@ -87,9 +87,9 @@ Point *point_hardcpy (const Point *src){
     if(src == NULL)
         return NULL;
     Point *trg;
+    trg = point_new (src->x, src->y, src->symbol);
     if(trg == NULL)
         return NULL;
-    trg = point_new (src->x, src->y, src->symbol);
     return trg;
 
 }

@@ -137,7 +137,7 @@ Map * map_readFromFile (FILE *pf){
     int i, j;
     char symbol;
     mp = (Map*)malloc(sizeof(Map));
-    fscanf(pf, "%d %d", mp->nrows, mp->ncols);
+    fscanf(pf, "%d %d", &mp->nrows, &mp->ncols);
     for(i=0;i<mp->nrows;i++){
         for(j=0;j<mp->ncols;j++){
             fscanf(pf, "%c", &symbol);
@@ -173,14 +173,13 @@ Bool map_equal (const void *_mp1, const void *_mp2){
     }
 
 int map_print (FILE*pf, Map *mp){
-    //POINT PRINT
     int i, j, x;
     if(pf == NULL || mp == NULL)
         return -1;
     fprintf(pf, "%d %d\n", mp->ncols, mp->nrows);
     for(i=0;i<mp->nrows;i++){
         for(j=0;j<mp->ncols;j++){
-            point_print(pf, mp->array[i][j]);
+            x = point_print(pf, mp->array[i][j]);
         }   
     }
     return x;
