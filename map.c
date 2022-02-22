@@ -176,7 +176,7 @@ int map_print (FILE*pf, Map *mp){
     int i, j, x;
     if(pf == NULL || mp == NULL)
         return -1;
-    fprintf(pf, "%d %d\n", mp->ncols, mp->nrows);
+    fprintf(pf, "%d %d\n", mp->nrows, mp->ncols);
     for(i=0;i<mp->nrows;i++){
         for(j=0;j<mp->ncols;j++){
             x = point_print(pf, mp->array[i][j]);

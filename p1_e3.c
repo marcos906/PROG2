@@ -39,5 +39,5 @@ int main(int argc, char **argv){
             neighboor = map_getNeighboor(mp, esquina_inferior, i);
             auxiliar = point_print(stdout, neighboor);
     }
-    
+    return auxiliar;
 }
