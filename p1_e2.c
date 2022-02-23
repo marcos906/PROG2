@@ -11,36 +11,38 @@
 
 int main(){
     Map *nuevo;
-    Point *input, *output, *puntos, *neighboor;
-    int i, j, aux;
-    if(point_new (1, 1, INPUT) == NULL || point_new (1, 2, OUTPUT) == NULL)
-        return 1;
-    input = point_new (1, 1, INPUT);
-    output = point_new (1, 2, OUTPUT);
+    Point *input, *output, *neighboor;
+    int i, aux;
     int filas = 3;
     int columnas = 4;
     if(map_new (filas, columnas) == NULL)
         return 1;
     nuevo = map_new (filas, columnas);
-    for(i=0;i<columnas;i++){
-        for(j=0;j<filas;j++){
-            if(point_new (i, j, BARRIER) == NULL)
-                return 1;
-            puntos = point_new (i, j, BARRIER);
-            puntos = map_insertPoint(nuevo, puntos);
-        }
-    }
-    if(map_setInput(nuevo, input) == OK && map_setOutput(nuevo, output)==OK)
+    input = point_new(1, 1, INPUT);
+    output = point_new(2, 1, OUTPUT);
+    map_insertPoint(nuevo, point_new(0, 0, BARRIER));
+    map_insertPoint(nuevo, point_new(1, 0, BARRIER));
+    map_insertPoint(nuevo, point_new(2, 0, BARRIER));
+    map_insertPoint(nuevo, point_new(3, 0, BARRIER));
+    map_insertPoint(nuevo, input);
+    map_insertPoint(nuevo, point_new(0, 1, BARRIER));
+    map_insertPoint(nuevo, point_new(3, 1, BARRIER));
+    map_insertPoint(nuevo, output);
+    map_insertPoint(nuevo, point_new(0, 2, BARRIER));
+    map_insertPoint(nuevo, point_new(1, 2, BARRIER));
+    map_insertPoint(nuevo, point_new(2, 2, BARRIER));
+    map_insertPoint(nuevo, point_new(3, 2, BARRIER));
+    if(map_setInput(nuevo, input)==OK && map_setOutput(nuevo, output)==OK)
         fprintf(stdout, "Map:\n");
-    if(map_print (stdout, nuevo) != -1){
-        fprintf(stdout, "\nGet output neighboors:\n");
+    aux = map_print (stdout, nuevo);
+    fprintf(stdout, "\nGet output neighboors:\n");
         for(i=0;i<4;i++){
             if(map_getNeighboor(nuevo, output, i) == NULL)
                 return 1;
             neighboor = map_getNeighboor(nuevo, output, i);
             aux = point_print(stdout, neighboor);
         }
-    }
+    fprintf(stdout, "\n");
     map_free (nuevo);
     return aux;
 }

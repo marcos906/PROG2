@@ -13,6 +13,8 @@ struct _Map {
 };
 
 Map * map_new (unsigned int nrows,  unsigned int ncols){
+    if(nrows<1 || nrows>64 || ncols<1 || ncols>64 )
+        return NULL;
     Map *mapNew;
     int i,j;
     mapNew = (Map*)malloc(sizeof(Map)); //Alocamos memoria para el mapa
@@ -33,6 +35,8 @@ Map * map_new (unsigned int nrows,  unsigned int ncols){
 }
 
 void map_free (Map * m){
+    if (m == NULL)
+        return;
     int i, j;
     for(i=0; i < MAX_NROWS; i++){
         for(j=0; j < MAX_NCOLS; j++){
@@ -86,7 +90,7 @@ Point *map_getPoint (const Map *mp, const Point *p){
 }
 
 Point *map_getNeighboor(const Map *mp, const Point *p, Position pos){
-    if (mp == NULL || p == NULL)
+    if (mp == NULL || p == NULL || pos <0|| pos>4)
         return NULL;  //Control errores
     Point *neighboor;
     int x = point_getCoordinateX(p);
@@ -132,24 +136,24 @@ Status map_setOutput (Map *mp, Point *p){
 }
 
 Map * map_readFromFile (FILE *pf){
+    if (pf == NULL)
+        return NULL;
     Map *mp;
-    Point *p;
-    int i, j;
+    int i, j, x, y;
     char symbol;
-    mp = (Map*)malloc(sizeof(Map));
-    fscanf(pf, "%d %d", &mp->nrows, &mp->ncols);
+    fscanf(pf, "%d %d", &x, &y);
+    mp = map_new(x, y);
     for(i=0;i<mp->nrows;i++){
         for(j=0;j<mp->ncols;j++){
             fscanf(pf, "%c", &symbol);
-            p = point_new (i, j, symbol);
             if(symbol == INPUT)
-                map_setInput(mp, p);
+                map_setInput(mp, point_new (i, j, symbol));
             else
-                mp->array[j][i] = p;
+                mp->array[j][i] = point_new (i, j, symbol);
             if(symbol == OUTPUT)
-                map_setOutput(mp, p);
+                map_setOutput(mp, point_new (i, j, symbol));
             else
-                mp->array[j][i] = p;
+                mp->array[j][i] = point_new (i, j, symbol);
         }    
     }
     return mp;
