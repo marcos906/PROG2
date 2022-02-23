@@ -59,7 +59,7 @@ Point *map_insertPoint (Map *mp, Point *p){
 }
 
 int map_getNcols (const Map *mp){
-    if (mp == NULL)
+    if (mp == NULL || mp->ncols > 64 || mp->nrows >64 || mp->ncols < 0 || mp->nrows <0)
         return -1;  //Control errores
     return mp->ncols; //Returneas el numero de columnas 
 }
