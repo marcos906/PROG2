@@ -16,14 +16,14 @@ Map * map_new (unsigned int nrows,  unsigned int ncols){
     if(nrows<1 || nrows>64 || ncols<1 || ncols>64 )
         return NULL;
     Map *mapNew;
-    int i,j;
     mapNew = (Map*)malloc(sizeof(Map)); //Alocamos memoria para el mapa
-    if(mapNew == NULL)
+    if(mapNew == NULL){
+        map_free(mapNew);
         return NULL; //Control de errores
+    }
+    int i,j;
     mapNew->ncols = ncols; //Metemos la informacion que nos mandan a la nueva estructura map
     mapNew->nrows = nrows;
-    mapNew->input = NULL;
-    mapNew->output = NULL; 
     
     for(i=0; i < MAX_NROWS; i++){
         for(j=0; j < MAX_NCOLS; j++)
