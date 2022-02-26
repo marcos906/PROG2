@@ -80,11 +80,11 @@ Point *map_getPoint (const Map *mp, const Point *p){
     Point *mapPoint;
     if (mp == NULL || p == NULL)
         return NULL;  //Control errores
-    if(mp->ncols > 64 || mp->nrows >64 || mp->ncols < 0 || mp->nrows <0)//control errores de >64 y <0 
+    if(mp->ncols >= 64 || mp->nrows >= 64 || mp->ncols < 0 || mp->nrows <0)//control errores de >64 y <0 
         return NULL;
     int x = point_getCoordinateX(p);
     int y = point_getCoordinateY(p);
-    mapPoint = mp->array[y][x];
+    mapPoint = mp->array[x][y];
 
     return mapPoint; //Returneas el punto dado
 }
@@ -143,18 +143,24 @@ Map * map_readFromFile (FILE *pf){
     char symbol;
     fscanf(pf, "%d %d", &x, &y);
     mp = map_new(x, y);
+    getc(pf);
     for(i=0;i<mp->nrows;i++){
         for(j=0;j<mp->ncols;j++){
             fscanf(pf, "%c", &symbol);
             if(symbol == INPUT)
-                map_setInput(mp, point_new (i, j, symbol));
+            {   
+                mp->array[j][i] = point_new (i, j, symbol);
+                map_setInput(mp, mp->array[j][i]);
+            }   
+            else if(symbol == OUTPUT)
+            {   
+                mp->array[j][i] = point_new (i, j, symbol);
+                map_setOutput(mp, mp->array[j][i]);   
+            }
             else
                 mp->array[j][i] = point_new (i, j, symbol);
-            if(symbol == OUTPUT)
-                map_setOutput(mp, point_new (i, j, symbol));
-            else
-                mp->array[j][i] = point_new (i, j, symbol);
-        }    
+        }
+        getc(pf);    
     }
     return mp;
 }
