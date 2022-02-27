@@ -149,16 +149,16 @@ Map * map_readFromFile (FILE *pf){
             fscanf(pf, "%c", &symbol);
             if(symbol == INPUT)
             {   
-                mp->array[j][i] = point_new (i, j, symbol);
-                map_setInput(mp, mp->array[j][i]);
+                mp->array[i][j] = point_new (j, i, symbol);
+                map_setInput(mp, mp->array[i][j]);
             }   
-            else if(symbol == OUTPUT)
+            if(symbol == OUTPUT)
             {   
-                mp->array[j][i] = point_new (i, j, symbol);
-                map_setOutput(mp, mp->array[j][i]);   
+                mp->array[i][j] = point_new (j, i, symbol);
+                map_setOutput(mp, mp->array[i][j]);   
             }
-            else
-                mp->array[j][i] = point_new (i, j, symbol);
+            if(symbol != INPUT && symbol != OUTPUT)
+                mp->array[i][j] = point_new (j, i, symbol);
         }
         getc(pf);    
     }

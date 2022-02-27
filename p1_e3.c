@@ -10,7 +10,7 @@
 #include "map.h"
 
 int main(int argc, char **argv){
-     Map *mp;
+    Map *mp;
     Point *output, *neighboor, *esquina_inferior, *holder;
     FILE *file;
     int auxiliar, i;
@@ -22,7 +22,6 @@ int main(int argc, char **argv){
     }
     file = fopen(argv[1], "r");
     mp = map_readFromFile (file);
-
     int x = map_getNcols(mp);
     int y = map_getNrows(mp);
     holder = point_new (x -1, y -1, BARRIER);
@@ -54,6 +53,7 @@ int main(int argc, char **argv){
         neighboor = map_getNeighboor(mp, esquina_inferior, i);
         auxiliar = point_print(stdout, neighboor);
     }
+    fprintf(stdout, "\n");
     free(mp);
     fclose(file);
     return auxiliar;
