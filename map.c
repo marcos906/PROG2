@@ -84,7 +84,7 @@ Point *map_getPoint (const Map *mp, const Point *p){
         return NULL;
     int x = point_getCoordinateX(p);
     int y = point_getCoordinateY(p);
-    mapPoint = mp->array[x][y];
+    mapPoint = mp->array[y][x];
 
     return mapPoint; //Returneas el punto dado
 }

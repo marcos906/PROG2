@@ -37,12 +37,12 @@ int main(){
         fprintf(stdout, "Map:\n");
         aux = map_print (stdout, nuevo);
         fprintf(stdout, "\nGet output neighboors:\n");
-            for(i=0;i<4;i++){
-                if(map_getNeighboor(nuevo, output, i) == NULL)
-                    return 1;
-                neighboor = map_getNeighboor(nuevo, output, i);
-                aux = point_print(stdout, neighboor);
-            }
+        for(i=0;i<4;i++){
+            if(map_getNeighboor(nuevo, output, i) == NULL)
+                return 1;
+            neighboor = map_getNeighboor(nuevo, output, i);
+            aux = point_print(stdout, neighboor);
+        }
         fprintf(stdout, "\n");
     }
     map_free (nuevo);
