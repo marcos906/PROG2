@@ -32,7 +32,7 @@ int main(){
     fprintf(stdout, "Creating p[2]: ");
         if(point_print (stdout, p[2])!=-1)
             fprintf(stdout, "\n");
-        if(point_equal (p[0], p[2])!=-1)
+        if(point_equal (p[0], p[2])==FALSE)
             fprintf(stdout, "Equal points p[0] and p[2]? No\n");
         else
             fprintf(stdout, "Equal points p[0] and p[2]? Yes\n");
