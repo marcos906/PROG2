@@ -18,7 +18,6 @@ Map * map_new (unsigned int nrows,  unsigned int ncols){
     Map *mapNew;
     mapNew = (Map*)malloc(sizeof(Map)); //Alocamos memoria para el mapa
     if(mapNew == NULL){
-        map_free(mapNew);
         return NULL; //Control de errores
     }
     int i,j;
