@@ -12,9 +12,6 @@
 int main(){
     int filas = 3;
     int columnas = 4;
-    if(map_new (filas, columnas) == NULL){
-        return 1;
-    }
     Map *nuevo;
     nuevo = map_new (filas, columnas);
     if(nuevo == NULL)
