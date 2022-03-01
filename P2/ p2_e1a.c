@@ -8,11 +8,13 @@
 */
 
 #include "map.h"
+#include <time.h>
+
 
 int main(int argc, char **argv){
     int argumento = atoi(argv[1]);
-    int i;
-    Point **p;
+    int i, j;
+    Point **p = {NULL};
     *p = (Point**)malloc(argumento*sizeof(Point*));
     if(*p == NULL)
         return 1;
@@ -21,6 +23,7 @@ int main(int argc, char **argv){
         printf("Sintaxis: ./P1e3 [número]\n");
         return -1;
     }
+    srand(time(NULL));
     Point *compare;
     double distance;
 
@@ -41,4 +44,27 @@ int main(int argc, char **argv){
         }
         fprintf(stdout, "distance: %lf", distance);
     }
+
+    point_free(compare);
+
+    for(i=0;i<argumento;i++){
+        for(j=0;i<j<argumento;j++){
+            fprintf(stdout, "p[%d] < p[%d]: ", i, j);
+            if(point_cmpEuDistance (p[i], p[j]) == 0 || point_cmpEuDistance (p[i], p[j]) == 1)
+                fprintf(stdout, "FALSE\n");
+            else if(point_cmpEuDistance (p[i], p[j]) == -1)
+                fprintf(stdout, "TRUE\n");
+            else{
+                for(i=0;i<argumento;i++){
+                    point_free(p[i]);
+                }
+                return 1;
+            }
+        }
+    }
+    
+    for(i=0;i<argumento;i++){
+        point_free(p[i]);
+    }
+    return 0;
 }
