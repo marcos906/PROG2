@@ -27,12 +27,14 @@ int main(int argc, char **argv){
     holder = point_new (x -1, y -1, BARRIER);
     if(!holder) 
     {   
+        fclose(file);
         map_free(mp);
         return -2;
     }
 
     output = map_getOutput(mp);
     if(output == NULL){
+        fclose(file);
         map_free(mp);
         return 1;
     }
@@ -54,7 +56,7 @@ int main(int argc, char **argv){
         auxiliar = point_print(stdout, neighboor);
     }
     fprintf(stdout, "\n");
-    free(mp);
+    map_free(mp);
     fclose(file);
     return auxiliar;
 }

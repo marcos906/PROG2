@@ -112,3 +112,46 @@ int point_print (FILE *pf, const void *p){
     Point *_p=(Point*)p;
     return fprintf(pf, "[(%d, %d): %c]", _p->x, _p->y, _p->symbol);
 }
+
+Status point_euDistance (const Point *p1, const Point *p2, double *distance){
+
+    if(p1 == NULL || p2 == NULL)
+        return ERROR;
+    
+    *distance = sqrt ((p1->x-p2->x)^2 + (p1->y-p2->y)^2);
+
+    return OK;
+}
+
+int point_cmpEuDistance (const void *p1, const void *p2){
+    if(p1==NULL || p2==NULL)
+        return INT_MIN;
+    Point *_p1=(Point*)p1;
+    Point *_p2=(Point*)p2;
+    Point *compare;
+    double distance1, distance2;
+
+    compare = point_new(0, 0, BARRIER);
+    if(compare == NULL)
+        return INT_MIN;
+    
+    if(point_euDistance(_p1, compare, &distance1) == OK && point_euDistance(_p2, compare, &distance2) == OK){
+        if(distance1 == distance2){
+            point_free(compare);
+            return 0;
+        }
+        else if(distance1 > distance2)
+        {
+            point_free(compare);
+            return 1;
+        }
+        else{
+            point_free(compare);
+            return -1;
+        }
+    }
+    else{
+        point_free(compare);
+        return INT_MIN;
+    }
+}
