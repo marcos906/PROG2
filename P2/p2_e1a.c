@@ -12,18 +12,17 @@
 
 
 int main(int argc, char **argv){
-    int argumento = atoi(argv[1]);
-    int i, j;
-    Point **p = {NULL};
-    *p = (Point**)malloc(argumento*sizeof(Point*));
-    if(*p == NULL)
-        return 1;
     if(argc < 2)
     {
         printf("Sintaxis: ./P1e3 [número]\n");
         return -1;
     }
-    srand(time(NULL));
+    int argumento = atoi(argv[1]);
+    int i, j;
+
+    Point *p[argumento];
+
+
     Point *compare;
     double distance;
 
@@ -32,7 +31,7 @@ int main(int argc, char **argv){
         return 1;
     for(i=0;i< argumento;i++){
         fprintf(stdout, "Point p[%d]=", i);
-        p[i] = point_new(rand() % 101, rand() % 101, BARRIER);
+        p[i] = point_new(rand() % 11, rand() % 11, BARRIER);
         if(p[i] == NULL){
             return 1;
         }
@@ -42,13 +41,13 @@ int main(int argc, char **argv){
             point_free(compare);
             return 1;
         }
-        fprintf(stdout, "distance: %lf", distance);
+        fprintf(stdout, " distance: %lf\n", distance);
     }
 
     point_free(compare);
 
     for(i=0;i<argumento;i++){
-        for(j=0;i<j<argumento;j++){
+        for(j=i; j<argumento;j++){
             fprintf(stdout, "p[%d] < p[%d]: ", i, j);
             if(point_cmpEuDistance (p[i], p[j]) == 0 || point_cmpEuDistance (p[i], p[j]) == 1)
                 fprintf(stdout, "FALSE\n");
