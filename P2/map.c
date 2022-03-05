@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include "point.h"
 #include "map.h"
-#include "stack_fDoble.h"
 
 #define MAX_NCOLS 64 // Maximum map cols
 #define MAX_NROWS 64 // Maximum map rows
@@ -182,9 +181,6 @@ Bool map_equal (const void *_mp1, const void *_mp2){
     return TRUE;      
     }
 
-Stack *stack_orderPoints (Stack *sin){
-    
-}
 
 int map_print (FILE*pf, Map *mp){
     int i, j, x;

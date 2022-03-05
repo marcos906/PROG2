@@ -8,7 +8,34 @@
 */
 
 #include "map.h"
+#include "stack_fDoble.h"
 #include <time.h>
+
+Stack *stack_orderPoints (Stack *sin){
+    Stack *s;
+    Stack *s0;
+    s0 = stack_init ();
+    while (stack_isEmpty (s) = FALSE){
+        e = stack_pop (s);
+        while (stack_isEmpty (s0) = FALSE && e < stack_top (s0)){
+            ea = stack_pop (s0);
+            stack_push (s, ea);
+        }
+        stack_push (s0, e);
+    }
+    return s0;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 int main(int argc, char **argv){
@@ -25,8 +52,6 @@ int main(int argc, char **argv){
 
     Point *compare;
     double distance;
-    Stack *s;
-
     compare = point_new(0, 0, BARRIER);
     if(compare == NULL)
         return 1;

@@ -1,9 +1,9 @@
 /* 
- * File:   map.h
+ * File: map.h
  * Author: profesores
  *
  * Created on 21 de enero de 2022, 15:44
- */
+*/
 
 #ifndef MAP_H
 #define MAP_H
