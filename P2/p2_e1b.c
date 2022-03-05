@@ -13,7 +13,7 @@
 
 Stack *stack_orderPoints (Stack *sin){
     Stack *s;
-    void *e, *ea;
+    Point *e, *ea;
     s = stack_init ();
     if ( s == NULL)
         return NULL;
@@ -21,7 +21,7 @@ Stack *stack_orderPoints (Stack *sin){
         e = stack_pop (sin);
         if( e == NULL)
             return s;
-        while (stack_isEmpty (s) == FALSE && e < stack_top (s)){
+        while (stack_isEmpty (s) == FALSE && point_cmpEuDistance (e, stack_top (s)) == -1){
             ea = stack_pop (s);
             if( ea == NULL)
                 return s;
@@ -31,6 +31,7 @@ Stack *stack_orderPoints (Stack *sin){
         if (stack_push (s, e) == ERROR)
             return s;
     }
+    
     stack_free(sin);
     return s;
 }
@@ -54,7 +55,7 @@ int main(int argc, char **argv){
         return -1;
     }
     int argumento = atoi(argv[1]);
-    int i, j;
+    int i;
 
     Stack *s, *f;
     s = stack_init();
@@ -81,12 +82,14 @@ int main(int argc, char **argv){
             return 1;
         }
         fprintf(stdout, " distance: %lf\n", distance);
-        if (stack_push(s, p[i]) == ERROR)
-            return s;
+        if (stack_push(s, p[i]) == ERROR){
+            stack_free(s);
+            return 1;
+        }
     }
 
     point_free(compare);
-    fprintf(stdout, "Original stack: \nSIZE: %d\n", stack_size (s));
+    fprintf(stdout, "Original stack: \n");
     if(stack_print(stdout, s, point_print) < 0){
         stack_free(s);
         return 1;
@@ -98,14 +101,21 @@ int main(int argc, char **argv){
         return 1;
     }
     f = stack_orderPoints(s);
-    fprintf(stdout, "Ordered stack: \nSIZE: %d\n", stack_size (f));
+    fprintf(stdout, "Ordered stack: \n");
     if(stack_print(stdout, f, point_print) < 0){
         stack_free(s);
         stack_free(f);
         return 1;
     }
 
-    fprintf(stdout, "Original tack: \nSIZE: %d\n", stack_size (s));
+    fprintf(stdout, "Original tack: \n");
+    if(stack_print(stdout, s, point_print) < 0){
+        stack_free(s);
+        return 1;
+    }
 
+    stack_free(s);
+    stack_free(f);
+    return 0;
 
 }
