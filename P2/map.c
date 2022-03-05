@@ -170,7 +170,7 @@ Bool map_equal (const void *_mp1, const void *_mp2){
     Map *mp1=(Map*)_mp1;
     Map *mp2=(Map*)_mp2;
     int i, j;
-    if(mp1->nrows != mp2-> nrows || mp1->ncols !=mp2->nrows)
+    if(mp1->nrows != mp2-> nrows || mp1->ncols !=mp2->ncols)
         return FALSE;
     for(i=0;i<mp1->nrows;i++){
         for(j=0;j<mp1->ncols;j++){

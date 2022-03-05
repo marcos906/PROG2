@@ -73,9 +73,13 @@ int main(int argc, char **argv){
         fprintf(stdout, "Point p[%d]=", i);
         p[i] = point_new(rand() % 11, rand() % 11, BARRIER);
         if(p[i] == NULL){
+            point_free(compare);
             return 1;
         }
-        point_print(stdout, p[i]);
+        if(point_print(stdout, p[i]) != -1){
+            point_free(compare);
+            return 1;
+        }
 
         if(point_euDistance(p[i], compare, &distance)== ERROR){
             point_free(compare);
