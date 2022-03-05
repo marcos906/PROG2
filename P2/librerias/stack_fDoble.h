@@ -104,17 +104,6 @@ size_t stack_size (const Stack *s);
 int stack_print(FILE* fp, const Stack *s,  P_stack_ele_print f);
 
 
-/**
-* @brief: Does an ordered stack with the greatest element at the top.
-*
-* The origenal stack will be emptied.
-*
-* @param sin, input stack
-6
-*
-* @return The function returns an ordered stack or NULL otherwise
-**/
-Stack *stack_orderPoints (Stack *sin);
 
 #endif	/* STACK_FDOBLE_H */
 

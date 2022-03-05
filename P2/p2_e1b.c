@@ -13,17 +13,26 @@
 
 Stack *stack_orderPoints (Stack *sin){
     Stack *s;
-    Stack *s0;
-    s0 = stack_init ();
-    while (stack_isEmpty (s) = FALSE){
-        e = stack_pop (s);
-        while (stack_isEmpty (s0) = FALSE && e < stack_top (s0)){
-            ea = stack_pop (s0);
-            stack_push (s, ea);
+    void *e, *ea;
+    s = stack_init ();
+    if ( s == NULL)
+        return NULL;
+    while (stack_isEmpty (sin) == FALSE){
+        e = stack_pop (sin);
+        if( e == NULL)
+            return s;
+        while (stack_isEmpty (s) == FALSE && e < stack_top (s)){
+            ea = stack_pop (s);
+            if( ea == NULL)
+                return s;
+            if (stack_push (sin, ea) == ERROR)
+                return s;
         }
-        stack_push (s0, e);
+        if (stack_push (s, e) == ERROR)
+            return s;
     }
-    return s0;
+    stack_free(sin);
+    return s;
 }
 
 
@@ -47,10 +56,14 @@ int main(int argc, char **argv){
     int argumento = atoi(argv[1]);
     int i, j;
 
+    Stack *s, *f;
+    s = stack_init();
+    if (s == NULL)
+        return 1;
+
     Point *p[argumento];
-
-
     Point *compare;
+
     double distance;
     compare = point_new(0, 0, BARRIER);
     if(compare == NULL)
@@ -68,10 +81,31 @@ int main(int argc, char **argv){
             return 1;
         }
         fprintf(stdout, " distance: %lf\n", distance);
-
+        if (stack_push(s, p[i]) == ERROR)
+            return s;
     }
 
     point_free(compare);
+    fprintf(stdout, "Original stack: \nSIZE: %d\n", stack_size (s));
+    if(stack_print(stdout, s, point_print) < 0){
+        stack_free(s);
+        return 1;
+    }
+
+    f = stack_init();
+    if (f == NULL){
+        stack_free(s);
+        return 1;
+    }
+    f = stack_orderPoints(s);
+    fprintf(stdout, "Ordered stack: \nSIZE: %d\n", stack_size (f));
+    if(stack_print(stdout, f, point_print) < 0){
+        stack_free(s);
+        stack_free(f);
+        return 1;
+    }
+
+    fprintf(stdout, "Original tack: \nSIZE: %d\n", stack_size (s));
 
 
 }
