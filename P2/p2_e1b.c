@@ -32,7 +32,7 @@ Stack *stack_orderPoints (Stack *sin){
             return s;
     }
     
-    stack_free(sin);
+
     return s;
 }
 
