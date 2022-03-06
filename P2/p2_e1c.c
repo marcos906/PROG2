@@ -22,14 +22,14 @@ Stack *stack_order(Stack *sin, int (*f_cmp)(const void *, const void *)){
         e = stack_pop (sin);
         if( e == NULL)
             return s;
-        while (stack_isEmpty (s) == FALSE && f_cmp(&e, stack_top (s)) < 0){
+        while (stack_isEmpty (s) == FALSE && f_cmp(e, stack_top (s)) < 0){
             ea = stack_pop (s);
             if( ea == NULL)
                 return s;
-            if (stack_push (sin, &ea) == ERROR)
+            if (stack_push (sin, ea) == ERROR)
                 return s;
         }
-        if (stack_push (s, &e) == ERROR)
+        if (stack_push (s, e) == ERROR)
             return s;
     }
     
@@ -76,7 +76,7 @@ int main(int argc, char **argv){
 
     for(i=0;i< argumento;i++){
         numero = rand() % 11;
-        fprintf(stdout, "Entero %d: %d", i, numero);
+        fprintf(stdout, "Entero %d: %d\n", i+1, numero);
         if (stack_push(s, &numero) == ERROR){
             stack_free(s);
             return 1;
@@ -102,7 +102,7 @@ int main(int argc, char **argv){
         return 1;
     }
 
-    fprintf(stdout, "Original tack: \n");
+    fprintf(stdout, "Original stack: \n");
     if(stack_print(stdout, s, int_print) < 0){
         stack_free(s);
         return 1;

@@ -11,9 +11,9 @@
 #include "stack_fDoble.h"
 #include <time.h>
 
-Stack *stack_orderPoints (Stack *sin){
+Stack *stack_order(Stack *sin, int (*f_cmp)(const void *, const void *)){
     Stack *s;
-    Point *e, *ea;
+    void *e, *ea;
     s = stack_init ();
     if ( s == NULL)
         return NULL;
@@ -21,7 +21,7 @@ Stack *stack_orderPoints (Stack *sin){
         e = stack_pop (sin);
         if( e == NULL)
             return s;
-        while (stack_isEmpty (s) == FALSE && point_cmpEuDistance (e, stack_top (s)) == -1){
+        while (stack_isEmpty (s) == FALSE && f_cmp(e, stack_top (s)) < 0){
             ea = stack_pop (s);
             if( ea == NULL)
                 return s;
@@ -105,7 +105,7 @@ int main(int argc, char **argv){
         stack_free(s);
         return 1;
     }
-    f = stack_orderPoints(s);
+    f = stack_order(s, point_cmpEuDistance);
     fprintf(stdout, "Ordered stack: \n");
     if(stack_print(stdout, f, point_print) < 0){
         stack_free(s);
