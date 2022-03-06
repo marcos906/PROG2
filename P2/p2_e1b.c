@@ -76,12 +76,13 @@ int main(int argc, char **argv){
             point_free(compare);
             return 1;
         }
-        if(point_print(stdout, p[i]) != -1){
+        if(point_print(stdout, p[i]) == -1){
             point_free(compare);
             return 1;
         }
 
         if(point_euDistance(p[i], compare, &distance)== ERROR){
+
             point_free(compare);
             return 1;
         }
@@ -112,7 +113,7 @@ int main(int argc, char **argv){
         return 1;
     }
 
-    fprintf(stdout, "Original tack: \n");
+    fprintf(stdout, "Original stack: \n");
     if(stack_print(stdout, s, point_print) < 0){
         stack_free(s);
         return 1;
