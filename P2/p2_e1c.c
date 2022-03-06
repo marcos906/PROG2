@@ -12,6 +12,8 @@
 #include <time.h>
 #include <limits.h>
 
+#define MAX_RANDOM 10
+
 Stack *stack_order(Stack *sin, int (*f_cmp)(const void *, const void *)){
     Stack *s;
     void *e, *ea;
@@ -67,7 +69,7 @@ int main(int argc, char **argv){
         return -1;
     }
     int argumento = atoi(argv[1]);
-    int i, numero;
+    int i, numero[MAX_RANDOM];
 
     Stack *s, *f;
     s = stack_init();
@@ -75,9 +77,9 @@ int main(int argc, char **argv){
         return 1;
 
     for(i=0;i< argumento;i++){
-        numero = rand() % 11;
-        fprintf(stdout, "Entero %d: %d\n", i+1, numero);
-        if (stack_push(s, &numero) == ERROR){
+        numero[i] = rand() % MAX_RANDOM;
+        fprintf(stdout, "Entero %d: %d\n", i+1, numero[i]);
+        if (stack_push(s, &numero[i]) == ERROR){
             stack_free(s);
             return 1;
         }
