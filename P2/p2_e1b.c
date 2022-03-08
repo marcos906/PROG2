@@ -40,7 +40,7 @@ Stack *stack_order(Stack *sin, int (*f_cmp)(const void *, const void *)){
 
 void free_point_stack(Stack *s){
     Point *aux;
-    while(stack_isEmpty == FALSE){
+    while(stack_isEmpty(s) == FALSE){
         aux = stack_pop(s);
         point_free(aux);
     }
