@@ -9,7 +9,7 @@
 
 #include "map.h"
 #include <time.h>
-
+//Definir numero magico
 
 int main(int argc, char **argv){
     if(argc < 2)

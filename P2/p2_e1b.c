@@ -38,7 +38,14 @@ Stack *stack_order(Stack *sin, int (*f_cmp)(const void *, const void *)){
 
 
 
-
+void free_point_stack(Stack *s){
+    Point *aux;
+    while(stack_isEmpty == FALSE){
+        aux = stack_pop(s);
+        point_free(aux);
+    }
+    stack_free(s);
+}
 
 
 
@@ -88,7 +95,7 @@ int main(int argc, char **argv){
         }
         fprintf(stdout, " distance: %lf\n", distance);
         if (stack_push(s, p[i]) == ERROR){
-            stack_free(s);
+            free_point_stack(s);
             return 1;
         }
     }
@@ -96,31 +103,31 @@ int main(int argc, char **argv){
     point_free(compare);
     fprintf(stdout, "Original stack: \n");
     if(stack_print(stdout, s, point_print) < 0){
-        stack_free(s);
+        free_point_stack(s);
         return 1;
     }
 
     f = stack_init();
     if (f == NULL){
-        stack_free(s);
+        free_point_stack(s);
         return 1;
     }
     f = stack_order(s, point_cmpEuDistance);
     fprintf(stdout, "Ordered stack: \n");
     if(stack_print(stdout, f, point_print) < 0){
-        stack_free(s);
-        stack_free(f);
+        free_point_stack(s);
+        free_point_stack(f);
         return 1;
     }
 
     fprintf(stdout, "Original stack: \n");
     if(stack_print(stdout, s, point_print) < 0){
-        stack_free(s);
+        free_point_stack(s);
         return 1;
     }
 
-    stack_free(s);
-    stack_free(f);
+    free_point_stack(s);
+    free_point_stack(f);
     return 0;
 
 }

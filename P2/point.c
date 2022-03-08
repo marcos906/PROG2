@@ -115,7 +115,7 @@ int point_print (FILE *pf, const void *p){
 
 Status point_euDistance (const Point *p1, const Point *p2, double *distance){
 
-    if(p1 == NULL || p2 == NULL)
+    if(p1 == NULL || p2 == NULL || distance == NULL)
         return ERROR;
     
     *distance = sqrt (((p1->x-p2->x)^2) + ((p1->y-p2->y)^2));
