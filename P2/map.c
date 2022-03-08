@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "point.h"
 #include "map.h"
+#include "stack_fDoble.h"
 
 #define MAX_NCOLS 64 // Maximum map cols
 #define MAX_NROWS 64 // Maximum map rows
@@ -193,4 +194,39 @@ int map_print (FILE*pf, Map *mp){
         }   
     }
     return x;
+}
+
+
+Point * map_dfs (FILE *pf, Map *mp){
+
+if (pf == NULL || mp == NULL)
+    return NULL;
+Point *pi, *po, *p;
+Stack *s;
+
+pi = map_getInputmp(mp);
+po = map_getOutput (mp);
+s = stack_init ();
+stack_push (s, pi);
+
+while (po != NULL & stack_isEmpty (s) == FALSE){
+    p = stack_pop (s);
+    if (p == NULL)
+        return NULL;
+    if (point_getVisited(p) == FALSE){
+        if(point_setVisited (p, TRUE) == ERROR)
+            return NULL;
+        for(){
+            if (point_getVisited (𝑝𝑛) == FALSE)
+                stack_push (s, 𝑣);
+        }
+    }
+}
+    
+stack_free (s);
+    
+if (p == po)
+    return NULL;
+
+return NULL;
 }
