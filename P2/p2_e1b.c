@@ -7,9 +7,10 @@
     @Grupo:2132
 */
 
-#include "map.h"
+#include "point.h"
 #include "stack_fDoble.h"
 #include <time.h>
+#define MAX_RANDOM 10 
 
 Stack *stack_order(Stack *sin, int (*f_cmp)(const void *, const void *)){
     Stack *s;
@@ -78,7 +79,7 @@ int main(int argc, char **argv){
         return 1;
     for(i=0;i< argumento;i++){
         fprintf(stdout, "Point p[%d]=", i);
-        p[i] = point_new(rand() % 11, rand() % 11, BARRIER);
+        p[i] = point_new(rand() % MAX_RANDOM, rand() % MAX_RANDOM, BARRIER);
         if(p[i] == NULL){
             point_free(compare);
             return 1;
@@ -107,11 +108,6 @@ int main(int argc, char **argv){
         return 1;
     }
 
-    f = stack_init();
-    if (f == NULL){
-        free_point_stack(s);
-        return 1;
-    }
     f = stack_order(s, point_cmpEuDistance);
     fprintf(stdout, "Ordered stack: \n");
     if(stack_print(stdout, f, point_print) < 0){

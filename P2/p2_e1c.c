@@ -91,11 +91,6 @@ int main(int argc, char **argv){
         return 1;
     }
 
-    f = stack_init();
-    if (f == NULL){
-        stack_free(s);
-        return 1;
-    }
     f = stack_order(s, int_cmp);
     fprintf(stdout, "Ordered stack: \n");
     if(stack_print(stdout, f, int_print) < 0){

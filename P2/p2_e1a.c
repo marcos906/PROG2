@@ -9,7 +9,7 @@
 
 #include "map.h"
 #include <time.h>
-//Definir numero magico
+#define MAX_RANDOM 10 
 
 int main(int argc, char **argv){
     if(argc < 2)
@@ -31,7 +31,7 @@ int main(int argc, char **argv){
         return 1;
     for(i=0;i< argumento;i++){
         fprintf(stdout, "Point p[%d]=", i);
-        p[i] = point_new(rand() % 11, rand() % 11, BARRIER);
+        p[i] = point_new(rand() % MAX_RANDOM, rand() % MAX_RANDOM, BARRIER);
         if(p[i] == NULL){
             return 1;
         }
