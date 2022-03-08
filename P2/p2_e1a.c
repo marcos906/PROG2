@@ -14,7 +14,7 @@
 int main(int argc, char **argv){
     if(argc < 2)
     {
-        printf("Sintaxis: ./P1e3 [número]\n");
+        printf("Sintaxis: ./P2e1a [número]\n");
         return -1;
     }
     int argumento = atoi(argv[1]);
