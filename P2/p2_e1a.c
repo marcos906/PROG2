@@ -7,7 +7,7 @@
     @Grupo:2132
 */
 
-#include "map.h"
+#include "point.h"
 #include <time.h>
 #define MAX_RANDOM 10 
 
