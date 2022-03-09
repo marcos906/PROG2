@@ -155,3 +155,18 @@ int point_cmpEuDistance (const void *p1, const void *p2){
         return INT_MIN;
     }
 }
+
+Bool point_getVisited (const Point *p){
+    if( p == NULL)
+        return FALSE;
+    if(p->visited == TRUE)
+        return TRUE;
+    return FALSE;
+}
+
+Status point_setVisited (Point *p, Bool bol){
+    if(p == NULL)
+        return ERROR;
+    p->symbol = bol;
+    return OK;
+}

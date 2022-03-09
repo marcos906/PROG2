@@ -197,36 +197,64 @@ int map_print (FILE*pf, Map *mp){
 }
 
 
-Point * map_dfs (FILE *pf, Map *mp){
 
-if (pf == NULL || mp == NULL)
+Point * map_dfs (Map *mp){
+if (mp == NULL)
     return NULL;
 Point *pi, *po, *p;
 Stack *s;
+int i;
 
-pi = map_getInputmp(mp);
-po = map_getOutput (mp);
-s = stack_init ();
-stack_push (s, pi);
+pi = map_getInput(mp);
+if(pi == NULL){
+    map_free(mp);
+    return NULL;
+}
 
-while (po != NULL & stack_isEmpty (s) == FALSE){
+po = map_getOutput(mp);
+if(po == NULL){
+    map_free(mp);
+    return NULL;
+}
+
+s = stack_init();
+if(s == NULL){
+    map_free(mp);
+    return NULL;
+}
+
+if(stack_push (s, pi) == ERROR){
+    map_free(mp); 
+    stack_free(s);
+    return NULL;
+}
+
+while (po != p && stack_isEmpty (s) == FALSE){
     p = stack_pop (s);
-    if (p == NULL)
+    if (p == NULL){
+        map_free(mp); 
+        stack_free(s);
         return NULL;
+    }
     if (point_getVisited(p) == FALSE){
-        if(point_setVisited (p, TRUE) == ERROR)
+        if(point_setVisited (p, TRUE) == ERROR){
+            map_free(mp); 
+            stack_free(s);
             return NULL;
-        for(){
-            if (point_getVisited (𝑝𝑛) == FALSE)
-                stack_push (s, 𝑣);
+        }
+        point_print(stdout, p);
+        for(i = 0;i<4;i++){
+            if (point_getVisited (map_getNeighboor(mp, p, i)) == FALSE)
+                stack_push (s, map_getNeighboor(mp, p, i));
         }
     }
 }
-    
 stack_free (s);
     
 if (p == po)
-    return NULL;
+    return p;
 
 return NULL;
+
 }
+

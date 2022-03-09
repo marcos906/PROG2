@@ -13,6 +13,7 @@
 int main(int argc, char **argv){
     Map *mp;
     FILE *file;
+    Point *p;
     int auxiliar;
 
     if(argc < 2)
@@ -28,7 +29,11 @@ int main(int argc, char **argv){
     auxiliar = map_print (stdout, mp);
 
     fprintf(stdout, "\nDFS traverse: \n");
-
-
+    p = map_dfs(mp);
+    if(p == NULL){
+        fprintf(stdout, "hola");
+        return 1;
+    }
+    point_print(stdout, p);
     return auxiliar;
 }
