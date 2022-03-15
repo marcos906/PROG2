@@ -167,6 +167,6 @@ Bool point_getVisited (const Point *p){
 Status point_setVisited (Point *p, Bool bol){
     if(p == NULL)
         return ERROR;
-    p->symbol = bol;
+    p->visited = bol;
     return OK;
 }

@@ -31,9 +31,9 @@ int main(int argc, char **argv){
     fprintf(stdout, "\nDFS traverse: \n");
     p = map_dfs(mp);
     if(p == NULL){
-        fprintf(stdout, "hola");
+        fprintf(stdout, "ERROR");
         return 1;
     }
-    point_print(stdout, p);
+
     return auxiliar;
 }
