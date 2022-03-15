@@ -277,7 +277,8 @@ while (po != p && stack_isEmpty (s) == FALSE){
     
     
 }
-printf("\n");
+fprintf(stdout,"\n");
+map_free(mp);
 stack_free (s);
     
 if (p == po)
