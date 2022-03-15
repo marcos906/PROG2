@@ -199,91 +199,91 @@ int map_print (FILE*pf, Map *mp){
 
 
 Point * map_dfs (Map *mp){
-if (mp == NULL)
-    return NULL;
-Point *pi, *po, *p, *pn;
-Stack *s;
-int i;
-p = NULL;
+    if (mp == NULL)
+        return NULL;
+    Point *pi, *po, *p, *pn;
+    Stack *s;
+    int i;
+    p = NULL;
 
 
-pi = map_getInput(mp);
-if(pi == NULL){
-    map_free(mp);
-    return NULL;
-}
+    pi = map_getInput(mp);
+    if(pi == NULL){
+        map_free(mp);
+        return NULL;
+    }
 
-po = map_getOutput(mp);
-if(po == NULL){
-    map_free(mp);
-    return NULL;
-}
+    po = map_getOutput(mp);
+    if(po == NULL){
+        map_free(mp);
+        return NULL;
+    }
 
-s = stack_init();
-if(s == NULL){
-    map_free(mp);
-    return NULL;
-}
+    s = stack_init();
+    if(s == NULL){
+        map_free(mp);
+        return NULL;
+    }
 
-if(stack_push (s, pi) == ERROR){
-    map_free(mp); 
-    stack_free(s);
-    return NULL;
-}
-
-while (po != p && stack_isEmpty (s) == FALSE){
-    p =  (Point*) stack_pop (s);
-    if (p == NULL){
+    if(stack_push (s, pi) == ERROR){
         map_free(mp); 
         stack_free(s);
         return NULL;
     }
-    
-    if (point_getVisited(p) == FALSE){
-       
-        if(point_setVisited (p, TRUE) == ERROR){
-            
+
+    while (po != p && stack_isEmpty (s) == FALSE){
+        p =  (Point*) stack_pop (s);
+        if (p == NULL){
             map_free(mp); 
             stack_free(s);
             return NULL;
         }
-       
-        for(i = 0;i<5;i++){
         
-            pn = map_getNeighboor(mp, p, i);
-            if(pn != NULL){
+        if (point_getVisited(p) == FALSE){
+        
+            if(point_setVisited (p, TRUE) == ERROR){
                 
-                if (point_getVisited (pn) == FALSE){
-                    if(point_getSymbol(pn) != BARRIER){
-                        if(stack_push (s, pn)== ERROR){
-                            map_free(mp); 
-                            stack_free(s);
-                            return NULL;
+                map_free(mp); 
+                stack_free(s);
+                return NULL;
+            }
+        
+            for(i = 0;i<5;i++){
+            
+                pn = map_getNeighboor(mp, p, i);
+                if(pn != NULL){
+                    
+                    if (point_getVisited (pn) == FALSE){
+                        if(point_getSymbol(pn) != BARRIER){
+                            if(stack_push (s, pn)== ERROR){
+                                map_free(mp); 
+                                stack_free(s);
+                                return NULL;
+                            }
                         }
-                    }
 
+                    }
+                    
                 }
                 
+            
+            
             }
+            point_print(stdout, p);
+        
+        }
+        
             
         
-           
-        }
-        point_print(stdout, p);
-       
-    }
-    
         
-    
-    
-}
-fprintf(stdout,"\n");
-map_free(mp);
-stack_free (s);
-    
-if (p == po)
-    return p;
-return NULL;
+    }
+    fprintf(stdout,"\n");
+    map_free(mp);
+    stack_free (s);
+        
+    if (p == po)
+        return p;
+    return NULL;
 
 }
 
