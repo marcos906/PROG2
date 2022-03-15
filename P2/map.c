@@ -261,6 +261,7 @@ while (po != p && stack_isEmpty (s) == FALSE){
                             return NULL;
                         }
                     }
+                    
                 }
                 
             }
