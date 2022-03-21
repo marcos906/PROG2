@@ -3,17 +3,17 @@ LCC = @gcc -o
 
 all: P2e1a P2e1b P2e1c P2e2 clean
 
-P2e1a: p2_e1a.o point.o map.o
-	$(LCC) P2e1a p2_e1a.o map.o point.o -lm -pthread -Llibrerias -lstack_fDoble
+P2e1a: p2_e1a.o point.o map.o stack_fDoble.o
+	$(LCC) P2e1a p2_e1a.o map.o point.o stack_fDoble.o -lm -pthread 
 
 P2e1b: p2_e1b.o point.o map.o stack_fDoble.o
 	$(LCC) P2e1b p2_e1b.o map.o point.o stack_fDoble.o -lm -pthread 
 
-P2e1c: p2_e1c.o point.o map.o
-	$(LCC) P2e1c p2_e1c.o map.o point.o -lm -pthread -Llibrerias -lstack_fDoble
+P2e1c: p2_e1c.o point.o map.o stack_fDoble.o
+	$(LCC) P2e1c p2_e1c.o map.o point.o stack_fDoble.o -lm -pthread 
 
-P2e2: p2_e2.o point.o map.o
-	$(LCC) P2e2 p2_e2.o map.o point.o -lm -pthread -Llibrerias -lstack_fDoble
+P2e2: p2_e2.o point.o map.o stack_fDoble.o
+	$(LCC) P2e2 p2_e2.o map.o point.o stack_fDoble.o -lm -pthread 
 
 stack_fDoble.o: stack_fDoble.c stack_fDoble.h types.h
 	$(CC) stack_fDoble.c

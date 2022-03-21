@@ -199,13 +199,12 @@ int map_print (FILE*pf, Map *mp){
 
 
 Point * map_dfs (Map *mp){
+    Point *pi = NULL, *po = NULL, *p = NULL, *pn = NULL;
+    Stack *s = NULL;
+    int i=0;
+    
     if (mp == NULL)
         return NULL;
-    Point *pi, *po, *p, *pn;
-    Stack *s;
-    int i;
-    p = NULL;
-
 
     pi = map_getInput(mp);
     if(pi == NULL){
@@ -224,6 +223,7 @@ Point * map_dfs (Map *mp){
         map_free(mp);
         return NULL;
     }
+    
 
     if(stack_push (s, pi) == ERROR){
         map_free(mp); 
@@ -231,6 +231,7 @@ Point * map_dfs (Map *mp){
         return NULL;
     }
 
+    
     while (po != p && stack_isEmpty (s) == FALSE){
         p =  (Point*) stack_pop (s);
         if (p == NULL){
@@ -240,22 +241,20 @@ Point * map_dfs (Map *mp){
         }
         
         if (point_getVisited(p) == FALSE){
-        
-            if(point_setVisited (p, TRUE) == ERROR){
-                
+            if( point_setVisited (p, TRUE) == ERROR){
                 map_free(mp); 
                 stack_free(s);
                 return NULL;
             }
-        
-            for(i = 0;i<5;i++){
+            
+
+            for(i=0;i<5;i++){
             
                 pn = map_getNeighboor(mp, p, i);
                 if(pn != NULL){
-                    
                     if (point_getVisited (pn) == FALSE){
                         if(point_getSymbol(pn) != BARRIER){
-                            if(stack_push (s, pn)== ERROR){
+                            if(stack_push (s, pn) == ERROR){
                                 map_free(mp); 
                                 stack_free(s);
                                 return NULL;
@@ -269,8 +268,9 @@ Point * map_dfs (Map *mp){
             
             
             }
-            point_print(stdout, p);
-        
+            if(point_print(stdout, p) == -1){
+                return NULL;
+            }
         }
         
             
@@ -280,10 +280,9 @@ Point * map_dfs (Map *mp){
     fprintf(stdout,"\n");
     map_free(mp);
     stack_free (s);
-        
+
     if (p == po)
         return p;
     return NULL;
-
 }
 

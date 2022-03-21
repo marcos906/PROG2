@@ -22,9 +22,12 @@ Point *point_new (int x, int y, char symbol){
     if(a == NULL){
         return NULL;
     }
+    
     a->x=x;
     a->y=y;
     a->symbol=symbol;
+
+    a->visited = FALSE;
     return a;
 }
 
@@ -156,11 +159,16 @@ int point_cmpEuDistance (const void *p1, const void *p2){
     }
 }
 
-Bool point_getVisited (const Point *p){
-    if( p == NULL)
+Bool point_getVisited (const Point *p)
+{
+    if( p == NULL){
+        
         return FALSE;
-    if(p->visited == TRUE)
+    }
+    if(p->visited == TRUE){
+        
         return TRUE;
+    }
     return FALSE;
 }
 

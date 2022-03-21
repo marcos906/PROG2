@@ -34,6 +34,7 @@ int main(int argc, char **argv){
         fprintf(stdout, "ERROR");
         return 1;
     }
-
+    
+    fclose(file); 
     return auxiliar;
 }

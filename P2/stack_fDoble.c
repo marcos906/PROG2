@@ -26,7 +26,7 @@ Bool isFull( Stack *stc){
     if(stc == NULL)
         return FALSE;
     
-    if(stc->capacity == stc->top)
+    if(stc->capacity == stc->top + 1)
         return TRUE;
 
     return FALSE;
@@ -35,8 +35,9 @@ Bool isFull( Stack *stc){
 Status increaseCapacity (Stack *stc){
     if(stc == NULL)
         return ERROR;
-    stc->capacity = stc->capacity + FCT_CAPACITY;
-    *stc->item = (Stack*)realloc(stc->item, stc->capacity*sizeof(Stack));
+    stc->capacity = stc->capacity * FCT_CAPACITY;
+    stc->item = (void**)realloc(stc->item, stc->capacity*sizeof(void*));
+
 
     if(stc->item == NULL)
         return ERROR;
@@ -60,7 +61,7 @@ Stack * stack_init (){
 
     s->top = -1;
 
-    *s->item = (Stack*)malloc(s->capacity*sizeof(Stack));
+    s->item = (void**)malloc(s->capacity*sizeof(void*));
 
     if(s->item == NULL)
         return NULL;
@@ -77,8 +78,7 @@ Stack * stack_init (){
 void stack_free (Stack *s){
     if(s == NULL)
         return;
-    if(stack_isEmpty(s) == FALSE)
-        return;
+    free(s->item);
     free(s);
 }
 
@@ -86,21 +86,23 @@ void stack_free (Stack *s){
 Status stack_push (Stack *s, const void *ele){
     if(s == NULL || ele == NULL)
         return ERROR;
+        
     if (isFull(s) == FALSE)
     {
-        s->item[s->top +1] = ele;
         s->top++;
+        s->item[s->top] = (void*)ele;
     }
     else{
         if(increaseCapacity(s) == OK){
-            s->item[s->top +1] = ele;
-            s->top++; 
+            s->top++;
+            s->item[s->top] = (void*)ele;
+            
         }
         else
             return ERROR;
     }
     return OK;
-    
+   
 }
 
 
@@ -115,7 +117,7 @@ void * stack_pop (Stack *s){
         e = s->item[s->top];
         if(e == NULL)
             return NULL;
-        s->item[s->top] = NULL;
+       
         s->top--;
     }
     return e;
@@ -143,7 +145,7 @@ void * stack_top (const Stack *s){
 Bool stack_isEmpty (const Stack *s){
     if(s == NULL)
         return FALSE;
-    if(s->item[s->top] == NULL)
+    if(s->top == -1)
         return TRUE;
     return FALSE;
 }
@@ -153,21 +155,18 @@ size_t stack_size (const Stack *s){
     if(s == NULL)
         return -1;
     
-    return s->capacity;
+    return s->top +1;
 }
 
 
 int stack_print(FILE* fp, const Stack *s,  P_stack_ele_print f){
     if(fp == NULL || s == NULL)
         return -1;
-    int i, res;
-    size_t size;
-    size = stack_size(s);
-    if(size == -1)
-        return -1;
-    fprintf(fp, "SIZE: %ld\n", size);
-    for(i = 0; i < s->capacity; i++){
-        res = f(fp, s->item[i]);
+    int i, res = 0;
+
+    for(i = 0; i < s->top; i++){
+        res += f(fp, s->item[i]);
+        res += fprintf(fp, "\n");
     }
     return res;
 }
