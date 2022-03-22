@@ -28,9 +28,18 @@ Status squeue_push(SortedQueue *q, void *ele, p_queue_ele_cmp pcmp) {
 
   if(q == NULL || ele == NULL)
     return ERROR;
+  if(squeue_isEmpty(q) == TRUE)
+    return ERROR;
   
-  
-    // TO DO: Completa el codigo de esta funcion
+  while(pcmp(squeue_getFront(q), ele)<0 && st == OK){
+    st = queue_push(q, squeue_pop(q)); 
+  };
+  if(st == OK )
+    st = queue_push(q, ele);
+  while(pcmp(squeue_getFront(q), ele)>=0 && st == OK){
+    st = queue_push(q, squeue_pop(q)); 
+  };
+
   
   return st;
 }
