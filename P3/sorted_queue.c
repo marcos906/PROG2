@@ -19,14 +19,18 @@ void squeue_free(SortedQueue *q) {
  * 
  * @param q, puntero a la cola.
  * @param ele, puntero al elemento a insertar.
- * @param pcmp, puntero a la funcion de comparacion.
+ * @param pcmp, puntero a la funcion de comparacion.         
  *
  * @return OK si la insercion se realiza con exito, ERROR en caso contrario.
  **/
 Status squeue_push(SortedQueue *q, void *ele, p_queue_ele_cmp pcmp) {
   Status st = OK;
 
-  // TO DO: Completa el codigo de esta funcion
+  if(q == NULL || ele == NULL)
+    return ERROR;
+  
+  
+    // TO DO: Completa el codigo de esta funcion
   
   return st;
 }
