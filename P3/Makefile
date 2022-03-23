@@ -1,34 +1,9 @@
 CC = @gcc -c -Wall -pedantic
 LCC = @gcc -o
 
-all: P2e1a P2e1b P2e1c P2e2 clean
+all: P3e1b clean
 
-P2e1a: p2_e1a.o point.o map.o stack_fDoble.o
-	$(LCC) P2e1a p2_e1a.o map.o point.o stack_fDoble.o -lm -pthread 
 
-P2e1b: p2_e1b.o point.o map.o stack_fDoble.o
-	$(LCC) P2e1b p2_e1b.o map.o point.o stack_fDoble.o -lm -pthread 
-
-P2e1c: p2_e1c.o point.o map.o stack_fDoble.o
-	$(LCC) P2e1c p2_e1c.o map.o point.o stack_fDoble.o -lm -pthread 
-
-P2e2: p2_e2.o point.o map.o stack_fDoble.o
-	$(LCC) P2e2 p2_e2.o map.o point.o stack_fDoble.o -lm -pthread 
-
-stack_fDoble.o: stack_fDoble.c stack_fDoble.h types.h
-	$(CC) stack_fDoble.c
-
-p2_e1a.o: p2_e1a.c map.h point.h types.h
-	$(CC) p2_e1a.c 
-	
-p2_e1b.o: p2_e1b.c map.h point.h types.h
-	$(CC) p2_e1b.c -Ilibrerias
-
-p2_e1c.o: p2_e1c.c map.h point.h types.h
-	$(CC) p2_e1c.c -Ilibrerias
-
-p2_e2.o: p2_e2.c map.h point.h types.h
-	$(CC) p2_e2.c 
 
 point.o: point.c point.h types.h
 	$(CC) point.c 
