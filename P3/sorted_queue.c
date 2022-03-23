@@ -34,8 +34,10 @@ Status squeue_push(SortedQueue *q, void *ele, p_queue_ele_cmp pcmp) {
   while(pcmp(squeue_getFront(q), ele)<0 && st == OK){
     st = queue_push(q, squeue_pop(q)); 
   };
+
   if(st == OK )
     st = queue_push(q, ele);
+    
   while(pcmp(squeue_getFront(q), ele)>=0 && st == OK){
     st = queue_push(q, squeue_pop(q)); 
   };
