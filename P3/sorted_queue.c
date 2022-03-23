@@ -25,21 +25,21 @@ void squeue_free(SortedQueue *q) {
  **/
 Status squeue_push(SortedQueue *q, void *ele, p_queue_ele_cmp pcmp) {
   Status st = OK;
-
+  int i;
   if(q == NULL || ele == NULL)
     return ERROR;
   if(squeue_isEmpty(q) == TRUE)
     return ERROR;
   
-  while(pcmp(squeue_getFront(q), ele)<0 && st == OK){
+  while(pcmp(squeue_getFront(q), ele)<0 && pcmp(squeue_getFront(q), ele)<0 && st == OK && i < queue_size(q)){
     st = queue_push(q, squeue_pop(q)); 
+    i++;
   };
 
-  if(st == OK )
-    st = queue_push(q, ele);
-    
-  while(pcmp(squeue_getFront(q), ele)>=0 && st == OK){
+  st = queue_push(q, ele);
+  while(pcmp(squeue_getFront(q), ele)>=0 && st == OK && i < queue_size(q)){
     st = queue_push(q, squeue_pop(q)); 
+    i++;
   };
 
   
